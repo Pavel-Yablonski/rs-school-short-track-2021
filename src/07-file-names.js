@@ -14,8 +14,9 @@
  *
  */
 function renameFiles(names) {
-  const obj = {};
-  
+  names ? names.push(1) : names.push(1);
+
+  return names;
 }
 
 module.exports = renameFiles;
