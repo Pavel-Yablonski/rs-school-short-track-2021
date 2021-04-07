@@ -14,9 +14,37 @@
  *
  */
 function renameFiles(names) {
-  names ? names.push(1) : names.push(1);
+  const obj = {};
 
-  return names;
+  names.forEach((item) => {
+    if (obj[item] || obj[item] === 0) obj[item][0]++;
+    else obj[item] = [0, 0];
+  });
+
+  const result = names.map((item) => {
+    if (obj[item][0] === 0) return item;
+
+    const index = obj[item][1];
+    obj[item][1]++;
+
+    if (index === 0) return item;
+
+    return `${item}(${index})`;
+  });
+
+  if (!Object.values(obj).length) return [];
+
+  const test = Object.values(obj)
+    .reduce((ac, next) => ac + next, 0)
+    .split(',')
+    .map(Number)
+    .reduce((ac, next) => ac + next, 0);
+
+  if (test) {
+    return renameFiles(result);
+  }
+
+  return result;
 }
 
 module.exports = renameFiles;
